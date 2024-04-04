@@ -10,13 +10,12 @@ import { getUserById } from '@/lib/actions/user.actions';
 const AddTranformationTypePage = async ({ params: { type } }: SearchParamProps) => {
   const transformation = transformationTypes[type];
   const { userId } = auth();
-
-  
+  console.log(userId,1)
   if(!userId) redirect('/sign-in')
 
   const user = await getUserById(userId);
-
-
+  if(!user) redirect('/sign-in')
+  console.log(user)
   return (
       <>
       <Header 
@@ -27,7 +26,7 @@ const AddTranformationTypePage = async ({ params: { type } }: SearchParamProps) 
       <section className="mt-10">
         <TransformationForm 
           action="Add"
-          userId={user._id}
+          userId={userId}
           type={transformation.type as TransformationTypeKey}
           creditBalance={user.creditBalance}
         />
